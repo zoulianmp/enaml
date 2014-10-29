@@ -13,9 +13,10 @@ This example shows how a PNG image (in an enaml Image object) can displayed.
 """
 import os
 
+from enaml.icon import Icon,IconImage
 from enaml.image import Image
 from enaml.layout.api import vbox, hbox, spacer
-from enaml.widgets.api import Window, Container, ComboBox, ImageView
+from enaml.widgets.api import Window, Container, ComboBox, ImageView,PushButton
 
 
 def image_path(name):
@@ -29,12 +30,98 @@ IMAGES = {
     'Image C': Image(data=open(image_path('img3.png'), 'rb').read()),
 }
 
+welcom_icon = Icon()
+welcom_image_1 = IconImage()
+welcom_image_1.image = Image(data=open(image_path('welcome.png'), 'rb').read())
+welcom_image_1.mode = 'normal'
+
+welcom_image_2 = IconImage()
+welcom_image_2.image = Image(data=open(image_path('welcomes.png'), 'rb').read())
+welcom_image_2.mode = 'active'
+
+welcom_icon.images = [welcom_image_1,welcom_image_2]
+
+
+
+
+
+dicomrt_icon = Icon()
+dicomrt_image_1 = IconImage()
+dicomrt_image_1.image = Image(data=open(image_path('dicomrt.png'), 'rb').read())
+dicomrt_image_1.mode = 'normal'
+
+dicomrt_image_2 = IconImage()
+dicomrt_image_2.image = Image(data=open(image_path('dicomrts.png'), 'rb').read())
+dicomrt_image_2.mode = 'active'
+
+dicomrt_icon.images = [dicomrt_image_1,dicomrt_image_2]
+
+
+
+trajectory_icon = Icon()
+trajectory_image_1 = IconImage()
+trajectory_image_1.image = Image(data=open(image_path('trajectory.png'), 'rb').read())
+trajectory_image_1.mode = 'normal'
+
+trajectory_image_2 = IconImage()
+trajectory_image_2.image = Image(data=open(image_path('trajectorys.png'), 'rb').read())
+trajectory_image_2.mode = 'active'
+
+trajectory_icon.images = [trajectory_image_1,trajectory_image_2]
+
+
+
+
+cloudmcsim_icon = Icon()
+cloudmcsim_image_1 = IconImage()
+cloudmcsim_image_1.image = Image(data=open(image_path('cloudmcsim.png'), 'rb').read())
+cloudmcsim_image_1.mode = 'normal'
+
+cloudmcsim_image_2 = IconImage()
+cloudmcsim_image_2.image = Image(data=open(image_path('cloudmcsims.png'), 'rb').read())
+cloudmcsim_image_2.mode = 'active'
+
+cloudmcsim_icon.images = [cloudmcsim_image_1,cloudmcsim_image_2]
+
+
+
+
+
+
 
 enamldef Main(Window):
     Container:
         constraints = [
-            vbox(hbox(cbox, spacer), img),
+            vbox(hbox(pt1,pt2,pt3,pt4,spacer),
+                 hbox(cbox, spacer), 
+                 img),
         ]
+       
+        PushButton: pt1:
+          #  text = 'Push Me'
+            icon = welcom_icon
+            icon_size = (48,48)
+            clicked :: print 'I was clicked!'
+
+        PushButton: pt2:
+            #text = 'Toggle Me'
+            icon = dicomrt_icon
+            icon_size = (48,48)
+            checkable = True
+            toggled :: print 'I was toggled'
+         
+        PushButton: pt3:
+           # text = 'Push Me'
+            icon = trajectory_icon
+            icon_size = (48,48)
+            clicked :: print 'I was clicked!'
+
+        PushButton: pt4:
+           # text = 'Push Me'
+            icon = cloudmcsim_icon
+            icon_size = (48,48)
+            clicked :: print 'I was clicked!'
+
         ComboBox: cbox:
             items = sorted(IMAGES.keys())
             index = 0
